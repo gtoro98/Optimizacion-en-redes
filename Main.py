@@ -14,4 +14,4 @@ camino_mas_corto(matriz_ad_javier, 25)
 #nx.draw(G, with_labels=True)
 #plt.show() 
 #intento()
-recontruir_camino(matriz_distancias, 25) #Pasion: 25 / Darkness: 4 / Rolita:2
+reconstruir_camino(matriz_distancias, 25) #Pasion: 25 / Darkness: 4 / Rolita:2

@@ -59,7 +59,7 @@ def visitar_nodo(nodo, matriz_ad):
                     
     return
 
-def recontruir_camino(matriz_distancias, nodoInicio):
+def reconstruir_camino(matriz_distancias, nodoInicio):
     Inicio = nodoInicio
     DestinoJavier = 28
     DestinoAndreina = 15
