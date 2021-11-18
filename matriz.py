@@ -43,7 +43,7 @@ def crear_matriz():
                 matriz_ad[y][nodo_abajo] = 7
             else:
                 matriz_ad[y][nodo_abajo] = 5           #se termina la ciudad hacia abajo("norte")
-
+    
     return matriz_ad
 
 def intento():

@@ -10,7 +10,7 @@ matriz_ad = crear_matriz()
 camino_mas_corto(matriz_ad)
 
 
-#G = nx.from_numpy_matrix(np.array(matriz_ad))  
-#nx.draw(G, with_labels=True)
-#plt.show() 
+G = nx.from_numpy_matrix(np.array(matriz_ad))  
+nx.draw(G, with_labels=True)
+plt.show() 
 #intento()

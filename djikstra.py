@@ -50,3 +50,7 @@ def visitar_nodo(nodo, matriz_ad):
                     print("El camino al nodo " + str(revisando['nodo']) + " es mas corto")
 
     return
+
+def caalcular_camino(nodo_inicial, nodo_final, matriz_distancias):
+    
+    return
