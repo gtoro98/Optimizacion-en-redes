@@ -42,13 +42,13 @@ def crear_matriz_javier():
             else:
                 matriz_ad[y][nodo_abajo] = 5           #se termina la ciudad hacia abajo("norte")
     
-    print("MATRIZ DE ADYACENCIA JAVIER:")
-    print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
-    for i in range(len(matriz_ad)):
-        if i<10:
-            print(" "+str(i)+" "+str(matriz_ad[i]))
-        else:
-            print(str(i)+" "+str(matriz_ad[i]))
+    #print("MATRIZ DE ADYACENCIA JAVIER:")
+    #print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
+    #for i in range(len(matriz_ad)):
+        #if i<10:
+            #print(" "+str(i)+" "+str(matriz_ad[i]))
+        #else:
+            #print(str(i)+" "+str(matriz_ad[i]))
           
     return matriz_ad
 
@@ -69,12 +69,12 @@ def crear_matriz_andreina(matriz_ad_javier):
             if (matriz_ad_javier[i][j]!=0):
                 matriz_ad[i][j] = matriz_ad_javier[i][j]+2
             
-    print("\nMATRIZ DE ADYACENCIA ANDREINA:")
-    print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
-    for i in range(len(matriz_ad)):
-        if i<10:
-            print(" "+str(i)+" "+str(matriz_ad[i]))
-        else:
-            print(str(i)+" "+str(matriz_ad[i]))
+    #print("\nMATRIZ DE ADYACENCIA ANDREINA:")
+    #print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
+    #for i in range(len(matriz_ad)):
+        #if i<10:
+            #print(" "+str(i)+" "+str(matriz_ad[i]))
+        #else:
+            #print(str(i)+" "+str(matriz_ad[i]))
     
     return matriz_ad
