@@ -6,7 +6,9 @@ from matriz import *
 from djikstra import *
 import gui
 
-gui.main_window()
+
+
+gui.main_window_function()
 #matriz_ad_javier = crear_matriz_javier()
 
 
@@ -19,4 +21,6 @@ gui.main_window()
 #plt.show() 
 #intento()
 #reconstruir_camino(matriz_distancias, 25) #Pasion: 25 / Darkness: 4 / Rolita:2
+
+
 
