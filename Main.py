@@ -1,9 +1,9 @@
 from matriz import *
 from djikstra import *
+import gui
 
-matriz_ad_javier = crear_matriz_javier()
-matriz_ad_anadreina = crear_matriz_andreina(matriz_ad_javier)
+gui.main_window_function()
 
-camino_mas_corto(matriz_ad_javier, 28)
 
-recontruir_camino(matriz_distancias, 28, 2) #Pacion: 25 / Darkness: 4 / Rolita:2
+
+
