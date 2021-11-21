@@ -143,6 +143,25 @@ def main_window_function():
                 cell["disabledforeground"] = "black"
                 cell["state"] = DISABLED
 
+    #ABRIR VENTANA MATRIZ AUXILIAR ###############################################################################  
+    def openNewWindowMatrisAux():
+        newWindow = Toplevel(main_window)
+        newWindow.title("Estructura Auxiliar:")
+        newWindow.geometry("700x700")
+        newWindow.config(background="#DB6060")
+
+        label_AUX=""
+        for i in range(len(matriz_distancias)):
+            label_AUX =label_AUX+str(matriz_distancias[i])+"\n"
+
+        labelAUX = Label(newWindow,  
+                    text=label_AUX, 
+                    background="#DB6060", 
+                    font=("Arial",12,"bold"),
+                    justify="left",
+                    )
+        labelAUX.place(x=0, y=0)
+
     #CREAR PANTALLA Y DETALLES DE LA MISMA #########################################################################################
     main_window = Tk()
     frame = Frame(main_window).place(x = 0, y = 0)
@@ -177,6 +196,9 @@ def main_window_function():
 
     matrizAndreina_button = Button(main_window, text="MatrizAD. Andre", command= openNewWindowAndreMAD, width =16, bg='#D484EB', fg='#ffffff', font=font.Font(size=16, weight='bold')) 
     matrizAndreina_button.place(x = 360, y = 450)
+
+    matrizAuxiliar_button = Button(main_window, text="Estructura Aux", command= openNewWindowMatrisAux, width =16, bg='#C70039', fg='#ffffff', font=font.Font(size=16, weight='bold')) 
+    matrizAuxiliar_button.place(x = 590, y = 450)
 
     #LABEL TITULO ##########################################################################################################
     labelTitulo = Label(frame,  #titulo
