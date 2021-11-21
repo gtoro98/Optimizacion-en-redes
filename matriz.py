@@ -1,6 +1,6 @@
 def crear_matriz_javier():
     nodos = 36
-
+    
     #inicializamos la matriz
     matriz_ad = []
     for i in range(nodos):          #para las filas 0-35
