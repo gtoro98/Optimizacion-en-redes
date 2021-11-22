@@ -1,80 +1,123 @@
-def crear_matriz_javier():
-    nodos = 36
+matriz_distancias = []
+
+def camino_mas_corto(matriz_ad, nodoInicio):
+    inicio = nodoInicio
+    matriz_distancias.clear()
     
-    #inicializamos la matriz
-    matriz_ad = []
-    for i in range(nodos):          #para las filas 0-35
-        a = []
-        for j in range(nodos):      #para las columnas 0-35
-            a.append(0)
-        matriz_ad.append(a)
-
-    #ponemos los pesos de los caminos
-    for y in range(len(matriz_ad)): #0-35
-
-        if y >= 1:  
-            nodo_izquierda = y - 1 #1-1=0 / 7-1=6
-            if(y%6 != 0):
-                if int(y/6) == 1: #entran 7,8,9,10,11
-                    matriz_ad[y][nodo_izquierda] = 10    #calle 51 matriz_ad[7][6] [8][7] [9][8] [10][9] [11][10]
-                else:
-                    matriz_ad[y][nodo_izquierda] = 5   #se termina la ciudad a la izquierda("este") [1][0] [2][1] [3][2] 
-
-        if y <= 34: #entra de 0-34
-            nodo_derecha = y + 1                    #para evitar pasarse de la cantidad de nodos en el ultimo nodo
-            if((y - 5)%6 != 0): # 5 11 17 23 29 no entran
-                if int(y/6) == 1: #entra 6,7,8,9,10
-                    matriz_ad[y][nodo_derecha] = 10     #[6][7] [7][8] [8][9] [9][10] [10][11]         #calle 51 
-                else:
-                    matriz_ad[y][nodo_derecha] = 5      #se termina la ciudad a la derecha("oeste")
-
-        if(y >= 6): #6-35
-            nodo_arriba = y - 6 #6-6=0 7-6=1 8-6=2
-            if(y%6 == 2 or y%6 == 3 or y%6 == 4): #entra 8 9 10 14 15 16 20 21 22 26 27 28 32 33 34
-                matriz_ad[y][nodo_arriba] = 7 
-            else:
-                matriz_ad[y][nodo_arriba] = 5          #se termina la ciudad hacia arriba("sur")
-
-        if(y <= 29):# 0-29
-            nodo_abajo = y + 6                     #para evitar negativos en la ultima fila
-            if(y%6 == 2 or y%6 == 3 or y%6 == 4): # entra 2 3 4 8 9 10 14 15 16 20 21 22 26 27 28
-                matriz_ad[y][nodo_abajo] = 7
-            else:
-                matriz_ad[y][nodo_abajo] = 5           #se termina la ciudad hacia abajo("norte")
-    
-    print("MATRIZ DE ADYACENCIA JAVIER:")
-    print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
-    for i in range(len(matriz_ad)):
-        if i<10:
-            print(" "+str(i)+" "+str(matriz_ad[i]))
+    for i in range(len(matriz_ad)): #0-35 preparar estructura de datos auxiliar: matriz nodo distancia minima predecesor y visitado
+        if i == inicio:
+            matriz_distancias.append({"nodo": i, "min_distancia": 0, "predecesor": None, "predecesor_alt": None,"visitado": False})
         else:
-            print(str(i)+" "+str(matriz_ad[i]))
-          
-    return matriz_ad
+             matriz_distancias.append({"nodo": i, "min_distancia": 999, "predecesor": None, "predecesor_alt": None, "visitado": False})
+                
+    #Imprimir la matriz auxiliar
+    print("\nINICIALIZACIÓN MATRIZ AUXILIAR:")
+    for x in range(len(matriz_ad)):
+        print(matriz_distancias[x])
+
+    visitar_nodo(min(matriz_distancias, key=lambda x:x['min_distancia']), matriz_ad)
+
+    while any(nodo['visitado'] == False for nodo in matriz_distancias): #cuando todos los nodos sean visitados
+        
+        print("----------------------------------------------------------------------------------------------------------------")
+        nodos_no_visitados = [t for t in enumerate(matriz_distancias) if t[1]['visitado'] == False] #lista con todos los nodos no visitados enumerados / todos menos el 2
+        visitar_nodo(min(nodos_no_visitados, key=lambda x:x[1]['min_distancia'])[1], matriz_ad)
 
 
-def crear_matriz_andreina(matriz_ad_javier):
-    nodos = 36
-    
-    #inicializamos la matriz
-    matriz_ad = []
-    for i in range(nodos):          #para las filas 0-35
-        a = []
-        for j in range(nodos):      #para las columnas 0-35
-            a.append(0)
-        matriz_ad.append(a)
-    
+    print("\nMATRIZ AUXILIAR ACTUALIZADA:")
     for i in range(len(matriz_ad)):
-        for j in range(len(matriz_ad)):
-            if (matriz_ad_javier[i][j]!=0):
-                matriz_ad[i][j] = matriz_ad_javier[i][j]+2
-            
-    print("\nMATRIZ DE ADYACENCIA ANDREINA:")
-    print("    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35]")
-    for i in range(len(matriz_ad)):
-        if i<10:
-            print(" "+str(i)+" "+str(matriz_ad[i]))
-        else:
-            print(str(i)+" "+str(matriz_ad[i]))
+        print(matriz_distancias[i])
+        
+    return
+
+def visitar_nodo(nodo, matriz_ad):
+    print("\nSe visita el nodo de menor dist. minima: ("+str(nodo['nodo'])+")  " +str(nodo))
     
-    return matriz_ad
+    matriz_distancias[nodo['nodo']]['visitado'] = True #actualiza visitado con true
+    print("Se actualiza el estado del nodo "+str(nodo['nodo'])+" a VISITADO: "+str(nodo))
+    
+    print("\nSe determinan sus vecinos NO visitados y se actualiza la matriz:")
+    for x in range(len(matriz_ad[nodo['nodo']])): #0-35
+        if matriz_ad[nodo['nodo']][x] != 0: #matriz_ad[2][x] encontramos un nodo vecino
+            if matriz_distancias[x]['visitado'] == False:  # revisamos si no ha sido visitado 1 3 8 
+                revisando = next(item for item in matriz_distancias if item["nodo"] == x) #revisado es la info del nodo
+                print("*NODO:"+str(revisando["nodo"])+" "+str(revisando))
+                
+                if matriz_ad[nodo['nodo']][x] + nodo['min_distancia'] < revisando['min_distancia']: #5 + 0 < 999
+                    print("-El nuevo camino al nodo ("+str(revisando['nodo'])+") es "+str(matriz_ad[nodo['nodo']][x] + nodo['min_distancia'])+", es más corto que el viejo "+str(revisando['min_distancia']))
+                    matriz_distancias[revisando['nodo']]['min_distancia'] = matriz_ad[nodo['nodo']][x] + nodo['min_distancia'] # cambia 999 por 5
+                    matriz_distancias[revisando['nodo']]['predecesor'] = nodo['nodo']
+                    print("-Nodo:"+str(revisando["nodo"])+" "+ str(matriz_distancias[revisando['nodo']])+"\n")
+
+                elif matriz_ad[nodo['nodo']][x] + nodo['min_distancia'] == revisando['min_distancia']: #5 + 0 < 999
+                    print("-El nuevo camino al nodo ("+str(revisando['nodo'])+") es "+str(matriz_ad[nodo['nodo']][x] + nodo['min_distancia'])+", es igual que el viejo "+str(revisando['min_distancia']))
+                    matriz_distancias[revisando['nodo']]['predecesor_alt'] = nodo['nodo']
+                    print("-Nodo:"+str(revisando["nodo"])+" "+ str(matriz_distancias[revisando['nodo']])+"\n")
+                else:
+                    print("-El nuevo camino al nodo ("+str(revisando['nodo'])+") es "+str(matriz_ad[nodo['nodo']][x] + nodo['min_distancia'])+", es más largo que el viejo "+str(revisando['min_distancia']))
+                    print("-NO se actualiza el nodo ("+str(revisando["nodo"])+")\n")
+                    
+    return
+
+def reconstruir_camino(matriz_distancias, nodoInicio):
+    Inicio = nodoInicio
+    DestinoJavier = 28
+    DestinoAndreina = 15
+    Cadena_Javier = []
+    Cadena_Andreina = []
+
+    Cadena_Javier.append(DestinoJavier)
+    Cadena_Andreina.append(DestinoAndreina)
+    Este_nodo = DestinoJavier
+    
+    while (Este_nodo != Inicio):
+        Este_nodo = matriz_distancias[Este_nodo]['predecesor']
+        Cadena_Javier.append(Este_nodo)
+
+    Este_nodo = DestinoAndreina
+    distancia_Andreina = matriz_distancias[DestinoAndreina]['min_distancia']
+
+    while (Este_nodo != Inicio):
+        Este_nodo = matriz_distancias[Este_nodo]['predecesor']
+        distancia_Andreina += 2
+
+        if Este_nodo in Cadena_Javier and Este_nodo != nodoInicio:
+            print("\n--PROBLEMA DETECTADO--")
+            print("Andreina camino: " + str(Cadena_Andreina) + " Andreina quiere pasar por el nodo "+str(Este_nodo))
+            print("Y Javier ya pasa por el nodo " + str(Este_nodo) + " Buscando camino alterno:")
+            Este_nodo = Cadena_Andreina.pop()
+            print("Buscando camino alterno para el nodo (" + str(Este_nodo) +") ...")
+
+            while matriz_distancias[Este_nodo]['predecesor_alt'] == None:
+                distancia_Andreina -= 2
+                Este_nodo = Cadena_Andreina.pop()
+                print("Buscando camino alterno para el nodo (" + str(Este_nodo)+") ...")
+
+            Cadena_Andreina.append(Este_nodo)
+            Este_nodo = matriz_distancias[Este_nodo]['predecesor_alt']
+        Cadena_Andreina.append(Este_nodo)
+
+    print("\nReconstruyendo el camino más corto desde el nodo inicio ("+str(Inicio)+") hasta el nodo destino ("+str(DestinoJavier)+")")
+    print("CAMINO MÁS CORTO JAVIER: "+str(Cadena_Javier))
+    print("DISTANCIA: "+str(matriz_distancias[DestinoJavier]['min_distancia']))
+    distancia_Javier = matriz_distancias[DestinoJavier]['min_distancia']
+
+    print("CAMINO MÁS CORTO ANDREINA: "+str(Cadena_Andreina))
+    print("DISTANCIA: "+str(distancia_Andreina))
+
+    #info = Cadena_Javier + "/" + distancia_Javier + "/" + Cadena_Andreina + "/" + distancia_Andreina
+    string_javier = ""
+    string_andreina = ""
+
+    for i in range(len(Cadena_Javier)):
+        string_javier = string_javier + str(Cadena_Javier[i]) + "-"
+
+    for i in range(len(Cadena_Andreina)):
+        string_andreina = string_andreina + str(Cadena_Andreina[i]) + "-"
+
+    info = string_javier + "," + str(distancia_Javier) + "/" + string_andreina + "," + str(distancia_Andreina)
+    
+    f = open("temp.txt","w+")
+    f.write(info)
+    f.close()
+    
